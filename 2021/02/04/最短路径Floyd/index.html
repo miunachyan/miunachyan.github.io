@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>最短路径Floyd | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="算法原理采用邻接矩阵表示法，依次将顶点v作为中间顶点，更新矩阵，重复n-1次（n为顶点数）。 核心代码123456789101112&#x2F;&#x2F;三重循环void Floyd(MGraph &amp;G) &amp;#123;	for (int i &#x3D; 0; i &lt; G.vexnum; i++) &amp;#123;		for (int j &#x3D; 0; j &lt; G.vexnum; j++) &amp;#123;			fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最短路径Floyd">
+<meta property="og:url" content="http://example.com/2021/02/04/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84Floyd/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="算法原理采用邻接矩阵表示法，依次将顶点v作为中间顶点，更新矩阵，重复n-1次（n为顶点数）。 核心代码123456789101112&#x2F;&#x2F;三重循环void Floyd(MGraph &amp;G) &amp;#123;	for (int i &#x3D; 0; i &lt; G.vexnum; i++) &amp;#123;		for (int j &#x3D; 0; j &lt; G.vexnum; j++) &amp;#123;			fo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="e:/POSTGRADUATEWIN!/Notes/miunachyan.github.io/source_posts/最短路径Floyd.assets/image-20210204135357440.png">
+<meta property="article:published_time" content="2021-02-04T05:29:19.000Z">
+<meta property="article:modified_time" content="2021-02-04T08:27:00.320Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="图">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="e:/POSTGRADUATEWIN!/Notes/miunachyan.github.io/source_posts/最短路径Floyd.assets/image-20210204135357440.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-最短路径Floyd" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/02/04/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84Floyd/" class="article-date">
+  <time class="dt-published" datetime="2021-02-04T05:29:19.000Z" itemprop="datePublished">2021-02-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      最短路径Floyd
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><p>采用邻接矩阵表示法，依次将顶点v作为中间顶点，更新矩阵，重复n-1次（n为顶点数）。</p>
+<h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//三重循环</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Floyd</span><span class="params">(MGraph &amp;G)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.vexnum; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; G.vexnum; j++) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; G.vexnum; k++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (G.arcs[j][k] &gt; G.arcs[j][i] + G.arcs[i][k]) &#123;</span><br><span class="line">					G.arcs[j][k] = G.arcs[j][i] + G.arcs[i][k];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 王道P256</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 65535</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MIN -65536</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_VERTEX_NUM 20</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> VertexType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">MGraph</span> &#123;</span></span><br><span class="line">	VertexType vertices[MAX_VERTEX_NUM];</span><br><span class="line">	<span class="keyword">int</span> arcs[MAX_VERTEX_NUM][MAX_VERTEX_NUM];</span><br><span class="line">	<span class="keyword">int</span> vexnum, arcnum;</span><br><span class="line">&#125; MGraph;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Create</span><span class="params">(MGraph &amp;G)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;输入顶点数和边数：&quot;</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; G.vexnum &gt;&gt; G.arcnum;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;输入顶点：&quot;</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.vexnum; i++)</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; G.vertices[i];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.vexnum; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; G.vexnum; j++) &#123;</span><br><span class="line">			G.arcs[i][j] = MAX;</span><br><span class="line">			<span class="keyword">if</span> (i == j)</span><br><span class="line">				G.arcs[i][j] = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;输入起点 终点 权值：\n&quot;</span>;</span><br><span class="line">	<span class="keyword">int</span> v1, v2, w;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; G.arcnum; j++) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; v1 &gt;&gt; v2 &gt;&gt; w;</span><br><span class="line">		G.arcs[v1][v2] = w;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Floyd</span><span class="params">(MGraph &amp;G)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.vexnum; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; G.vexnum; j++) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; G.vexnum; k++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (G.arcs[j][k] &gt; G.arcs[j][i] + G.arcs[i][k]) &#123;</span><br><span class="line">					G.arcs[j][k] = G.arcs[j][i] + G.arcs[i][k];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	MGraph G;</span><br><span class="line">	Create(G);</span><br><span class="line">	Floyd(G);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.vexnum; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; G.vexnum; j++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; setiosflags(ios::left) &lt;&lt; setw(<span class="number">5</span>) &lt;&lt; G.arcs[i][j] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">6 8</span></span><br><span class="line"><span class="comment">0 1 2 3 4 5</span></span><br><span class="line"><span class="comment">0 5 100</span></span><br><span class="line"><span class="comment">0 4 30</span></span><br><span class="line"><span class="comment">0 2 10</span></span><br><span class="line"><span class="comment">1 2 5</span></span><br><span class="line"><span class="comment">2 3 50</span></span><br><span class="line"><span class="comment">3 5 10</span></span><br><span class="line"><span class="comment">4 3 20</span></span><br><span class="line"><span class="comment">4 5 60</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\POSTGRADUATEWIN!\Notes\miunachyan.github.io\source_posts\最短路径Floyd.assets\image-20210204135357440.png" alt="image-20210204135357440"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/02/04/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84Floyd/" data-id="cklksgf0q000l8og395w11mtl" data-title="最短路径Floyd" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%BE/" rel="tag">图</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/02/04/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          拓扑排序
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/02/04/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84Dijkstra/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">最短路径Dijkstra</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE/" rel="tag">图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9F%A5%E6%89%BE/" rel="tag">查找</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/%E5%9B%BE/" style="font-size: 20px;">图</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 16.67px;">排序</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9F%A5%E6%89%BE/" style="font-size: 13.33px;">查找</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/02/25/%E5%AD%A6%E6%A0%A1%E9%80%89%E6%8B%A9/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/25/MD%E5%85%A5%E9%97%A8/">Markdown入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/09/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">选择排序</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/09/%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F/">交换排序</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
