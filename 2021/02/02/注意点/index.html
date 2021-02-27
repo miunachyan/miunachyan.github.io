@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="使用了typedef的structC++中无typedef时，在末尾定义的是变量，可以直接使用它对结构中的成员变量进行赋值； 而有typedef 时（和C相同），在末尾定义的是结构类型，相当于为struct定义的结构类型换了一个新的名字，使用时，需要先定义变量，然后对结构中的成员变量进行赋值。 下标数组思想：洛谷P1068、5143delete关键字用delete命令处理某个指针，说是把那个指针删">
+  <meta name="description" content="使用了typedef的struct C++中无typedef时，在末尾定义的是变量，可以直接使用它对结构中的成员变量进行赋值； 而有typedef 时（和C相同），在末尾定义的是结构类型，相当于为struct定义的结构类型换了一个新的名字，使用时，需要先定义变量，然后对结构中的成员变量进行赋值。  下标数组思想：洛谷P1068、5143  delete关键字 用delete命令处理某个指针，说是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="注意点">
 <meta property="og:url" content="http://example.com/2021/02/02/%E6%B3%A8%E6%84%8F%E7%82%B9/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="使用了typedef的structC++中无typedef时，在末尾定义的是变量，可以直接使用它对结构中的成员变量进行赋值； 而有typedef 时（和C相同），在末尾定义的是结构类型，相当于为struct定义的结构类型换了一个新的名字，使用时，需要先定义变量，然后对结构中的成员变量进行赋值。 下标数组思想：洛谷P1068、5143delete关键字用delete命令处理某个指针，说是把那个指针删">
+<meta property="og:description" content="使用了typedef的struct C++中无typedef时，在末尾定义的是变量，可以直接使用它对结构中的成员变量进行赋值； 而有typedef 时（和C相同），在末尾定义的是结构类型，相当于为struct定义的结构类型换了一个新的名字，使用时，需要先定义变量，然后对结构中的成员变量进行赋值。  下标数组思想：洛谷P1068、5143  delete关键字 用delete命令处理某个指针，说是">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-02T14:05:43.000Z">
 <meta property="article:modified_time" content="2021-02-04T11:15:28.378Z">
@@ -196,22 +196,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="使用了typedef的struct"><a href="#使用了typedef的struct" class="headerlink" title="使用了typedef的struct"></a>使用了typedef的struct</h2><p>C++中无typedef时，在末尾定义的是变量，可以直接使用它对结构中的成员变量进行赋值；</p>
+        <h2 id="使用了typedef的struct"><a class="markdownIt-Anchor" href="#使用了typedef的struct"></a> 使用了typedef的struct</h2>
+<p>C++中无typedef时，在末尾定义的是变量，可以直接使用它对结构中的成员变量进行赋值；</p>
 <p>而有typedef 时（和C相同），在末尾定义的是结构类型，相当于为struct定义的结构类型换了一个新的名字，使用时，需要先定义变量，然后对结构中的成员变量进行赋值。</p>
-<h2 id="下标数组思想：洛谷P1068、5143"><a href="#下标数组思想：洛谷P1068、5143" class="headerlink" title="下标数组思想：洛谷P1068、5143"></a>下标数组思想：洛谷P1068、5143</h2><h2 id="delete关键字"><a href="#delete关键字" class="headerlink" title="delete关键字"></a>delete关键字</h2><p>用delete命令处理某个指针，说是把那个指针删除了是不正确的。delete命令指示释放了那个指针原本所指的那部分内存而已。被delete后的指针p的值（地址值）并非就是NULL，而是随机值。也就是被delete后，如果不再加上一句p=NULL，p就成了“野指针”，在内存里乱指一通。</p>
+<h2 id="下标数组思想洛谷p1068-5143"><a class="markdownIt-Anchor" href="#下标数组思想洛谷p1068-5143"></a> 下标数组思想：洛谷P1068、5143</h2>
+<h2 id="delete关键字"><a class="markdownIt-Anchor" href="#delete关键字"></a> delete关键字</h2>
+<p>用delete命令处理某个指针，说是把那个指针删除了是不正确的。delete命令指示释放了那个指针原本所指的那部分内存而已。被delete后的指针p的值（地址值）并非就是NULL，而是随机值。也就是被delete后，如果不再加上一句p=NULL，p就成了“野指针”，在内存里乱指一通。</p>
 <p>如果在定义p的那个函数在delete了p后，没再调用p，就没什么问题，在这个函数结束后，p就会跟其它变量一样被消除。但若在那个函数里delete了p后，又没再给p赋值（地址值），再次调用p就危险了，因为这时p在内存里乱指，有可能指到一些重要地址，随时可能系统崩溃。</p>
-<h2 id="连续输入数据"><a href="#连续输入数据" class="headerlink" title="连续输入数据"></a>连续输入数据</h2><p>while(cin&gt;&gt;a)</p>
+<h2 id="连续输入数据"><a class="markdownIt-Anchor" href="#连续输入数据"></a> 连续输入数据</h2>
+<p>while(cin&gt;&gt;a)</p>
 <p>cin是输入操作符，cin&gt;&gt;a的过程是先取得从键盘的输入值a，并将a赋给cin，因此baiwhile(cin&gt;&gt;a)的意思就是只要输入的值有效，那么就执行while体内的语句。</p>
 <p>如果输入流正常，就会继续循环获取键盘值，如果输入流错误，或者达到文件末尾（在windows下Ctrl+Z+Enter结束，在Linux下Ctrl+D），该循环就会终止。</p>
-<h2 id="结构体中-和-gt-的区别"><a href="#结构体中-和-gt-的区别" class="headerlink" title="结构体中 . 和 -&gt; 的区别"></a>结构体中 <strong>.</strong> 和 <strong>-&gt;</strong> 的区别</h2><p>用“.”的话，只需要声明一个结构体。格式是，结构体类型名+结构体名。然后用结构体名加“.”加域名就可以引用域 了。因为自动分配了结构体的内存。如同 int a;一样。</p>
+<h2 id="结构体中-和-的区别"><a class="markdownIt-Anchor" href="#结构体中-和-的区别"></a> 结构体中 <strong>.</strong> 和 <strong>-&gt;</strong> 的区别</h2>
+<p>用“.”的话，只需要声明一个结构体。格式是，结构体类型名+结构体名。然后用结构体名加“.”加域名就可以引用域 了。因为自动分配了结构体的内存。如同 int a;一样。</p>
 <p>用-&gt;的话，要声明一个结构体的指针，还要手动开辟一个该结构体的内存，然后把返回的指针给声明的结构体指针。才能用-&gt;正确引用。否则内存中只分配了指针的内存，没有分配结构体的内存，想要的结构体实际上是不存在。这时候用-&gt;引用自然出错了，因为没有结构体，自然没有结构体的域了。</p>
-<p>“.”我直接读做”的”。-&gt;我读作”指向的结构体的”。</p>
-<h2 id="数组作为函数参数"><a href="#数组作为函数参数" class="headerlink" title="数组作为函数参数"></a>数组作为函数参数</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zouxu634866/article/details/89318769">https://blog.csdn.net/zouxu634866/article/details/89318769</a></p>
-<h2 id="i-和-i的区别"><a href="#i-和-i的区别" class="headerlink" title="i++和++i的区别"></a>i++和++i的区别</h2><ul>
-<li>在普通语句中，i++是先引用再++，++i是先++后引用</li>
+<p>&quot;.“我直接读做&quot;的”。-&gt;我读作&quot;指向的结构体的”。</p>
+<h2 id="数组作为函数参数"><a class="markdownIt-Anchor" href="#数组作为函数参数"></a> 数组作为函数参数</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zouxu634866/article/details/89318769">https://blog.csdn.net/zouxu634866/article/details/89318769</a></p>
+<h2 id="i和i的区别"><a class="markdownIt-Anchor" href="#i和i的区别"></a> i<ins>和</ins>i的区别</h2>
+<ul>
+<li>在普通语句中，i<ins>是先引用再</ins>，<ins>i是先</ins>后引用</li>
 <li>在for循环中，二者没有差别</li>
 </ul>
-<h2 id="do-while和while的区别"><a href="#do-while和while的区别" class="headerlink" title="do-while和while的区别"></a>do-while和while的区别</h2><p>前者是先执行再判断，后者是先判断再执行</p>
+<h2 id="do-while和while的区别"><a class="markdownIt-Anchor" href="#do-while和while的区别"></a> do-while和while的区别</h2>
+<p>前者是先执行再判断，后者是先判断再执行</p>
 
     </div>
 
@@ -296,7 +304,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BA%86typedef%E7%9A%84struct"><span class="nav-number">1.</span> <span class="nav-text">使用了typedef的struct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E6%A0%87%E6%95%B0%E7%BB%84%E6%80%9D%E6%83%B3%EF%BC%9A%E6%B4%9B%E8%B0%B7P1068%E3%80%815143"><span class="nav-number">2.</span> <span class="nav-text">下标数组思想：洛谷P1068、5143</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#delete%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">delete关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text">连续输入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD-%E5%92%8C-gt-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">结构体中 . 和 -&gt; 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">数组作为函数参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-%E5%92%8C-i%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">7.</span> <span class="nav-text">i++和++i的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#do-while%E5%92%8Cwhile%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text">do-while和while的区别</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BA%86typedef%E7%9A%84struct"><span class="nav-number">1.</span> <span class="nav-text"> 使用了typedef的struct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E6%A0%87%E6%95%B0%E7%BB%84%E6%80%9D%E6%83%B3%E6%B4%9B%E8%B0%B7p1068-5143"><span class="nav-number">2.</span> <span class="nav-text"> 下标数组思想：洛谷P1068、5143</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#delete%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text"> delete关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text"> 连续输入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD-%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text"> 结构体中 . 和 -&gt; 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text"> 数组作为函数参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i%E5%92%8Ci%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">7.</span> <span class="nav-text"> i和i的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#do-while%E5%92%8Cwhile%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text"> do-while和while的区别</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -401,6 +409,8 @@
 
 
 
+
+  
 
   
 
